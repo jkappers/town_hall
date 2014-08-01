@@ -4,32 +4,33 @@ class CardsController < ApplicationController
 
   def index
     @cards = Card.all
+    render json: @cards
   end
 
   def show
+    render json: @card
   end
 
   def new
     @card = current_user.cards.new
+    render json: @card
   end
 
   def create
     @card = current_user.cards.create(card_params)
 
     if @card.save
-      redirect_to @card
+      render status: 200, json: { success: "Card was successfully created.", card: @card }
     else
-      # TODO: Handle error.
-      render :new
+      render status: 422, json: { error: "There are problems with the card you attempted to save."}
     end
   end
 
   def update
     if @card.update_attributes(card_params)
-      redirect_to @card
+      render status: 200, json: { success: "Card was successfully updated.", card: @card }
     else
-      # TODO: Handle error.
-      redirect_to @card
+      render status: 422, json: { error: "There are problems with the card you attempted to save."}
     end
   end
 
@@ -51,7 +52,7 @@ class CardsController < ApplicationController
   private
 
     def set_card
-      @card = Card.find_by_id(params[:id])
+      @card = Card.find_by_id(params[:id]) || not_found
     end
 
     def card_params

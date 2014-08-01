@@ -1,5 +1,5 @@
-<!DOCTYPE html>
-<html>
+<!doctype html>
+<html lang="en" ng-app>
 <head>
   <meta charset="utf-8">
   <title>TownHall</title>
@@ -8,7 +8,6 @@
 
   <%= javascript_include_tag "rails", "data-turbolinks-track" => true %>
   <script src="//maxcdn.bootstrapcdn.com/bootstrap/3.2.0/js/bootstrap.min.js"></script>
-  <script src="//ajax.googleapis.com/ajax/libs/angularjs/1.2.21/angular.min.js"></script>
 
   <%= csrf_meta_tags %>
 </head>
@@ -18,8 +17,8 @@
     votes: <%= current_user.vote_count %>
   <% end %>
 
-  <p class="notice"><%= notice %></p>
-  <p class="alert"><%= alert %></p>
-  <%= yield %>
+  <main id='view-frame' ng-view></main>
+
+  <%= javascript_include_tag "vendor/require", :"data-main" => "js/main" %>
 </body>
 </html>
