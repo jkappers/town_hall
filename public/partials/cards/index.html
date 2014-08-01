@@ -1,5 +1,6 @@
-<ul>
-  <li ng-repeat="card in cards | orderBy:predicate:created_at">
-    <a href="/#/cards/{{card.id}}">{{card.description}}</a>
+<input ng-model="query"/>
+<ol>
+  <li ng-repeat="card in cards | filter:query | orderBy:predicate:created_at">
+    {{ card.votes }}<a href="/#/cards/{{card.id}}">{{card.description}}</a>
   </li>
-</ul>
+</ol>
