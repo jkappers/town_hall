@@ -33,6 +33,21 @@ class CardsController < ApplicationController
     end
   end
 
+  def vote
+    user = User.find(params[:user_id]);
+    card = Card.find(params[:card_id]);
+    vote = params[:vote].to_i;
+
+    ActiveRecord::Base.transaction do
+      user.vote_count -= vote
+      card.votes += vote
+      user.save!
+      card.save!
+    end
+
+    render json: { card: card, user: user }.to_json
+  end
+
   private
 
     def set_card
