@@ -1,6 +1,5 @@
 class CardsController < ApplicationController
-  before_action :authenticate_user!, only: [:new, :create, :update]
-  before_action :set_card, only: [:show, :update]
+  before_action :set_card, only: [:show, :update, :vote, :unvote]
 
   def index
     @cards = Card.all
@@ -26,7 +25,7 @@ class CardsController < ApplicationController
     end
   end
 
-  def update
+  def update    
     if @card.update_attributes(card_params)
       render status: 200, json: { success: "Card was successfully updated.", card: @card }
     else
@@ -35,18 +34,41 @@ class CardsController < ApplicationController
   end
 
   def vote
-    user = User.find(params[:user_id]);
-    card = Card.find(params[:card_id]);
-    vote = params[:vote].to_i;
-
-    ActiveRecord::Base.transaction do
-      user.vote_count -= vote
-      card.votes += vote
-      user.save!
-      card.save!
+    if !@card.stale? && current_user.votes > 0
+      ActiveRecord::Base.transaction do
+        Vote.create(user: current_user, card: @card)
+        current_user.votes -= 1
+        current_user.save
+      end
     end
 
-    render json: { card: card, user: user }.to_json
+    render status: 200, nothing: true
+  end
+
+  def unvote
+    if !@card.stale?
+      ActiveRecord::Base.transaction do
+        vote = Vote.where(user: current_user, card: @card).first
+        if vote.present?
+          current_user.votes += 1
+          current_user.save
+          vote.destroy
+        end
+      end
+    end
+
+    render status: 200, nothing: true
+  end
+
+  def favorite
+    Favorite.find_or_create_by(card: @card, user: current_user)
+    render status: 200, nothing: true
+  end
+
+  def unfavorite
+    favorite = Favorite.where(card: @card, user: current_user).first
+    favorite.destroy unless favorite.nil?
+    render status: 200, nothing: true
   end
 
   private
@@ -56,8 +78,6 @@ class CardsController < ApplicationController
     end
 
     def card_params
-      params.require(:card).permit(
-        :description, :votes
-      )
+      params.require(:card).permit(:description, :votes)
     end
 end

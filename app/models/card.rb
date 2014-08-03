@@ -1,6 +1,7 @@
 class Card < ActiveRecord::Base
 
   belongs_to :user
+  has_many :votes
 
-  validates_length_of :description, :maximum => 140
+  validates :description, presence: true, length: { maximum: 140 }
 end

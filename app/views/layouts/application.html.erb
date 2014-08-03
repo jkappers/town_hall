@@ -14,9 +14,11 @@
 <body>
   <% if user_signed_in? %>
     <%= link_to "Sign out", destroy_user_session_path, method: :delete %>
-    votes: <%= current_user.vote_count %>
+    votes: <%= current_user.votes %>
   <% end %>
-
+  <%= flash[:notice] %>
+  <%= flash[:alert] %>
+  <%= yield %>
   <main id='view-frame' ng-view></main>
 
   <%= javascript_include_tag "vendor/require", :"data-main" => "js/main" %>
