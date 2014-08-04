@@ -2,7 +2,7 @@ class CardsController < ApplicationController
   before_action :set_card, only: [:show, :update, :vote, :unvote]
 
   def index
-    @resources = Card.all
+    @resources = Card.fresh.all
   end
 
   def new
@@ -29,7 +29,7 @@ class CardsController < ApplicationController
   end
 
   def vote
-    if !@card.stale? && current_user.votes > 0
+    if !@card.locked? && current_user.votes > 0
       ActiveRecord::Base.transaction do
         Vote.create(user: current_user, card: @card)
         current_user.votes -= 1
@@ -41,7 +41,7 @@ class CardsController < ApplicationController
   end
 
   def unvote
-    if !@card.stale?
+    if !@card.locked?
       ActiveRecord::Base.transaction do
         vote = Vote.where(user: current_user, card: @card).first
         if vote.present?

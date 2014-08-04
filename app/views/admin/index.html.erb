@@ -1,0 +1,12 @@
+<form action="<%= admin_freeze_path %>" method="POST">
+  <p>Freeze all posts to prevent any future alteration.</p>
+  <button type="submit" class="btn btn-primary">Freeze</button>
+</form>
+
+
+<form action="<%= admin_reset_path %>" method="POST">
+  <p>Set all posts to stale and refresh user vote counts</p>
+  <label>Maximum Votes This Session</label>
+  <input name="vote_count" value="5" />
+  <button type="submit" class="btn btn-primary">Reset</button>
+</form>

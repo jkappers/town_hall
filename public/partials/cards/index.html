@@ -26,9 +26,12 @@
         <ol class="list-group">
           <li class="list-group-item" ng-repeat="card in cards | filter:query | orderBy:predicate:created_at">
             <span class="votes">{{ card.votes }}</span>
-            <a ng-click="vote(card)"><span class="glyphicon glyphicon-chevron-up"></span></a>
-            <a ng-click="unvote(card)"><span class="glyphicon glyphicon-chevron-down"></span></a>
-            <a ng-click="favorite(card)"><span class="glyphicon glyphicon-heart"></span></a>
+            <div class="actions" ng-if="!card.locked">
+              <a ng-click="vote(card)"><span class="glyphicon glyphicon-chevron-up"></span></a>
+              <a ng-click="unvote(card)"><span class="glyphicon glyphicon-chevron-down"></span></a>
+              <a ng-click="favorite(card)"><span class="glyphicon glyphicon-heart"></span></a>
+            </div>
+            <span class="glyphicon glyphicon-lock" ng-if="card.locked"></span>
             <a ui-sref="cards.show({id: card.id})">{{card.description}}</a>
           </li>
         </ol>

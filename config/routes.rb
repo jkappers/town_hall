@@ -1,6 +1,5 @@
 TownHall::Application.routes.draw do
   devise_for :users
-  root to: 'static_page#index'
 
   resources :cards, except: [:edit, :destroy] do
     member do
@@ -14,6 +13,13 @@ TownHall::Application.routes.draw do
       get "current"
     end
   end
+
+  get  "admin/index"
+  post "admin/freeze"
+  post "admin/reset"
+  get  "admin", action: "index", controller: "admin"
+
+  root to: 'static_page#index'
 
   # Redirect any other route to root and let angular handle it.
   get '*path' => redirect('/')
