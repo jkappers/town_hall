@@ -26,7 +26,7 @@
 
       <div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
         <ul class="nav navbar-nav">
-          <li class="active"><a href="#">Forum</a></li>
+          <li class="active"><a ui-sref="cards">Forum</a></li>
         </ul>
 
         <ul class="nav navbar-nav navbar-right">
@@ -48,7 +48,7 @@
   <%= flash[:notice] %>
   <%= flash[:alert] %>
   <%= yield %>
-  <main id='view-frame' ng-view></main>
+  <main ui-view id='view-frame'></main>
 
   <%= javascript_include_tag "vendor/require", :"data-main" => "js/main" %>
 </body>

@@ -1,20 +1,20 @@
 define(['angular', 'app'], function(angular, app) {
   'use strict';
 
-  return app.config(['$stateProvider', '$injector', '$urlRouterProvider', '$routeProvider', function($stateProvider, $injector, $urlRouterProvider, $routeProvider) {
+  return app.config(function($stateProvider, $urlRouterProvider){
 
-    $routeProvider.when('/', {
-      templateUrl: '/partials/cards/index.html',
-      controller: 'cardsIndexController'
-    });
-    $routeProvider.when('/cards/:id', {
-      templateUrl: '/partials/cards/show.html',
-      controller: 'cardsShowController'
-    });
-    $routeProvider.otherwise({
-      templateUrl: '/partials/unfound.html',
-      controller: 'unfoundController',
-      animate: 'about-view'
-    });
-  }]);
+      $stateProvider
+        .state("cards", {
+          url: "/cards",
+          templateUrl: "/partials/cards/index.html",
+          controller: "cardsIndexController"
+        })
+        .state("cards.show", {
+          url: "/:id",
+          templateUrl: "/partials/cards/show.html",
+          controller: "cardsShowController"
+        })
+
+      $urlRouterProvider.otherwise('/cards');
+  });
 });

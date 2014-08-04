@@ -21,14 +21,14 @@ define(['angular'], function(angular) {
         });
 
     }]) // End of cardsIndexController
-    .controller('cardsShowController', ['$scope', '$sce', '$rootScope', '$routeParams', '$http', '$location', '$timeout', function($scope, $sce, $rootScope, $routeParams, $http, $location, $timeout) {
+    .controller('cardsShowController', ['$scope', '$sce', '$rootScope', '$stateParams', '$http', '$location', '$timeout', function($scope, $sce, $rootScope, $stateParams, $http, $location, $timeout) {
 
 
       /* Setup */
 
       $scope.card;
 
-      $http.get("./cards/" + $routeParams.id + ".json")
+      $http.get("./cards/" + $stateParams.id + ".json")
         .success(function(data) {
           $scope.card = data;
         })
