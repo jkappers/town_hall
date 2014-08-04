@@ -47,6 +47,14 @@ define(['angular'], function(angular) {
           $location.path("/not_found");
         });
 
+    }])
+    .controller('CardsNewController', ['$scope', '$http', function($scope, $http) {
+      $scope.card = {};
+
+      $scope.save = function(){
+        $http.post("/cards", { card: $scope.card });
+      }
+
     }]) // End of cardsShowController
     .controller('unfoundController', ['$scope', '$rootScope', function($scope, $rootScope) {
 

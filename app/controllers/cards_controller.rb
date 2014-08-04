@@ -73,6 +73,6 @@ class CardsController < ApplicationController
     end
 
     def card_params
-      params.require(:card).permit(:description, :votes)
+      params.require(:card).permit(:description)
     end
 end

@@ -9,6 +9,11 @@ define(['angular', 'app'], function(angular, app) {
           templateUrl: "/partials/cards/index.html",
           controller: "cardsIndexController"
         })
+        .state("cards.new", {
+          url: "/new",
+          templateUrl: "/partials/cards/new.html",
+          controller: "CardsNewController"
+        })
         .state("cards.show", {
           url: "/:id",
           templateUrl: "/partials/cards/show.html",
