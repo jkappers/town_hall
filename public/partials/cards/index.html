@@ -1,6 +1,42 @@
-<input ng-model="query"/>
-<ol>
-  <li ng-repeat="card in cards | filter:query | orderBy:predicate:created_at">
-    {{ card.votes }}<a href="/#/cards/{{card.id}}">{{card.description}}</a>
-  </li>
-</ol>
+<div class="container-fluid">
+  <div class="row">
+    <div class="col-sm-12 col-md-12">
+      <form class="form-inline" role="search">
+        <input ng-model="query" placeholder="Search" class="form-control" />
+      </form>
+    </div>
+  </div>
+
+  <div class="row">
+    <div class="col-sm-12 col-md-12">
+      <ul class="nav nav-tabs" role="tablist">
+        <li class="active"><a href="#items-current" role="tab" data-toggle="tab">Current</a></li>
+        <li><a href="#items-favorites" role="tab" data-toggle="tab"><span class="glyphicon glyphicon-heart"></span> Dear to Me</a></li>
+      </ul>
+
+      <div class="tab-content">
+        <div class="tab-pane fade in active" id="items-current">
+          <ol class="list-group">
+            <li class="list-group-item" ng-repeat="card in cards | filter:query | orderBy:predicate:created_at">
+              <a href=""><span class="votes">0{{ card.votes.count }}</span></a>
+              <a href=""><span class="glyphicon glyphicon-chevron-up"></span></a>
+              <a href=""><span class="glyphicon glyphicon-chevron-down"></span></a>
+              <a href=""><span class="glyphicon glyphicon-heart"></span></a>
+              <a ui-sref="/#/cards/{{card.id}}">{{card.description}}</a>
+            </li>
+          </ol>
+        </div>
+        <div class="tab-pane fade" id="items-favorites">
+          You haven't favorited anything.
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<script>
+  $('.nav-tabs a').click(function (e) {
+    e.preventDefault()
+    $(this).tab('show')
+  })
+</script>
