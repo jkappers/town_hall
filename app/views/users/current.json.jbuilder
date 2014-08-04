@@ -1,0 +1,1 @@
+json.votes @resource.votes

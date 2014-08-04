@@ -5,21 +5,31 @@ define(['angular'], function(angular) {
   /* Controllers */
 
   return angular.module('myApp.controllers', [])
-    .controller('cardsIndexController', ['$scope', '$rootScope', '$http', '$location', '$timeout', function($scope, $rootScope, $http, $location, $timeout) {
+    .controller('cardsIndexController', ['$scope', '$rootScope', '$http', '$location', '$timeout', '$q', function($scope, $rootScope, $http, $location, $timeout, $q) {
+
+      $scope.vote = function(card) {
+        if ($scope.user.votes > 0) {
+          $scope.user.votes -=1;
+          card.votes += 1;
+          $http.post("./cards/"+card.id+"/vote");
+        }
+      }
+
+      $scope.unvote = function(card) {
+        $scope.user.votes +=1;
+        card.votes -= 1;
+        $http.delete("./cards/"+card.id+"/unvote");
+      }
 
 
-      /* Setup */
-
-      $scope.cards;
-
-      $http.get("./cards.json")
-        .success(function(data) {
-          $scope.cards = data;
-        })
-        .error(function(data, status, headers, config) {
-          // TODO: Handle error.
-        });
-
+      $q.all([
+        $http.get("./users/current.json"),
+        $http.get("./cards.json")
+      ])
+      .then(function(responses){
+        $scope.user  = responses[0].data;
+        $scope.cards = responses[1].data;
+      });
     }]) // End of cardsIndexController
     .controller('cardsShowController', ['$scope', '$sce', '$rootScope', '$stateParams', '$http', '$location', '$timeout', function($scope, $sce, $rootScope, $stateParams, $http, $location, $timeout) {
 

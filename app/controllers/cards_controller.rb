@@ -2,12 +2,7 @@ class CardsController < ApplicationController
   before_action :set_card, only: [:show, :update, :vote, :unvote]
 
   def index
-    @cards = Card.all
-    render json: @cards
-  end
-
-  def show
-    render json: @card
+    @resources = Card.all
   end
 
   def new
@@ -25,7 +20,7 @@ class CardsController < ApplicationController
     end
   end
 
-  def update    
+  def update
     if @card.update_attributes(card_params)
       render status: 200, json: { success: "Card was successfully updated.", card: @card }
     else

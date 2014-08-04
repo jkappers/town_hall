@@ -11,14 +11,15 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20140803234754) do
+ActiveRecord::Schema.define(version: 20140804022457) do
 
   create_table "cards", force: true do |t|
     t.integer  "user_id"
-    t.string   "description", limit: 140,             null: false
+    t.string   "description", limit: 140,                 null: false
     t.integer  "votes",                   default: 0
     t.datetime "created_at"
     t.datetime "updated_at"
+    t.boolean  "stale",                   default: false
   end
 
   add_index "cards", ["user_id"], name: "index_cards_on_user_id", using: :btree

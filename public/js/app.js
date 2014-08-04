@@ -21,6 +21,7 @@ define([
     myApp.run(function($rootScope, $templateCache, $http, $location, $window){
       console.log('Angular Started');
     });
+
     return myApp;
   }
 );
