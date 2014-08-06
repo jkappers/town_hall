@@ -2,7 +2,7 @@ define(['angular', 'app'], function(angular, app) {
   'use strict';
 
   return angular.module('myApp.services', [])
-    .service("Context", function(){
+    .service("Session", function(){
       var _user = null;
 
       return {

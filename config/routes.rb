@@ -8,6 +8,13 @@ TownHall::Application.routes.draw do
     end
   end
 
+  resources :posts, except: [:edit, :destroy] do
+    member do
+      post    "vote"
+      delete  "unvote"
+    end
+  end
+
   resources :users, only: :none do
     collection do
       get "current"

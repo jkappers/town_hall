@@ -1,0 +1,3 @@
+define([
+  "causes/posts/posts"
+])

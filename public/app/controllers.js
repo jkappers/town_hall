@@ -5,9 +5,9 @@ define(['angular'], function(angular) {
   /* Controllers */
 
   return angular.module('myApp.controllers', [])
-    .controller('CardsListController', ['$scope', '$http', '$q', 'CardCollection', 'Context', function($scope, $http, $q, CardCollection, Context) {
+    .controller('CardsListController', ['$scope', '$http', '$q', 'CardCollection', 'Session', function($scope, $http, $q, CardCollection, Session) {
 
-      $scope.user = Context.user();
+      $scope.user = Session.user();
 
       $scope.vote = function(card) {
         if ($scope.user.votes > 0) {
@@ -31,11 +31,8 @@ define(['angular'], function(angular) {
         $scope.collection.cards(responses[0].data)
       });
     }]) // End of cardsIndexController
-    .controller('CardsIndexController', ['$scope', '$http', 'Context', function($scope, $http, Context) {
-      $scope.user = Context.user();
-      
-
-
+    .controller('CardsIndexController', ['$scope', '$http', 'Session', function($scope, $http, Session) {
+      $scope.user = Session.user();
     }])
     .controller('CardsNewController', ['$scope', '$http', 'CardCollection', 'Encouragement', function($scope, $http, CardCollection, Encouragement) {
       $scope.card = {};
