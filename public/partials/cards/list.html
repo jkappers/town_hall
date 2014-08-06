@@ -1,0 +1,20 @@
+<li class="list-group-item" ng-repeat="card in collection.cards() | filter:query | orderBy:predicate:created_at">
+  <div class="card-actions" ng-if="!card.locked">
+    <div class="btn-group">
+      <button class="btn btn-default" ng-click="vote(card)">
+        <span class="glyphicon glyphicon-chevron-up"></span>
+      </button>
+      <span class="btn btn-default">{{ card.votes }}</span>
+      <button class="btn btn-default" ng-click="unvote(card)">
+        <span class="glyphicon glyphicon-chevron-down"></span>
+      </button>
+    </div>
+    <div class="btn-group">
+      <button class="btn btn-default" ng-click="favorite(card)">
+        <span class="glyphicon glyphicon-heart"></span>
+      </button>
+    </div>
+  </div>
+  <span class="glyphicon glyphicon-lock" ng-if="card.locked"></span>
+  {{card.description}}
+</li>

@@ -6,18 +6,20 @@ define(['angular', 'app'], function(angular, app) {
       $stateProvider
         .state("cards", {
           url: "/cards",
-          templateUrl: "/partials/cards/index.html",
-          controller: "cardsIndexController"
-        })
-        .state("cards.new", {
-          url: "/new",
-          templateUrl: "/partials/cards/new.html",
-          controller: "CardsNewController"
-        })
-        .state("cards.show", {
-          url: "/:id",
-          templateUrl: "/partials/cards/show.html",
-          controller: "cardsShowController"
+          views: {
+            "@": {
+              templateUrl: "/partials/cards/index.html",
+              controller: "CardsIndexController"
+            },
+            "form@cards": {
+              templateUrl: "/partials/cards/new.html",
+              controller: "CardsNewController"
+            },
+            "list@cards": {
+              templateUrl: "/partials/cards/list.html",
+              controller: "CardsListController"
+            }
+          }
         })
 
       $urlRouterProvider.otherwise('/cards');

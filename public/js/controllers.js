@@ -5,7 +5,7 @@ define(['angular'], function(angular) {
   /* Controllers */
 
   return angular.module('myApp.controllers', [])
-    .controller('cardsIndexController', ['$scope', '$rootScope', '$http', '$location', '$timeout', '$q', function($scope, $rootScope, $http, $location, $timeout, $q) {
+    .controller('CardsListController', ['$scope', '$http', '$q', 'CardCollection', function($scope, $http, $q, CardCollection) {
 
       $scope.vote = function(card) {
         if ($scope.user.votes > 0) {
@@ -21,41 +21,34 @@ define(['angular'], function(angular) {
         $http.delete("./cards/"+card.id+"/unvote");
       }
 
-
       $q.all([
         $http.get("./users/current.json"),
         $http.get("./cards.json")
       ])
       .then(function(responses){
-        $scope.user  = responses[0].data;
-        $scope.cards = responses[1].data;
+        $scope.user = responses[0].data;
+        $scope.collection = CardCollection
+        $scope.collection.cards(responses[1].data)
       });
     }]) // End of cardsIndexController
-    .controller('cardsShowController', ['$scope', '$sce', '$rootScope', '$stateParams', '$http', '$location', '$timeout', function($scope, $sce, $rootScope, $stateParams, $http, $location, $timeout) {
 
-
-      /* Setup */
-
-      $scope.card;
-
-      $http.get("./cards/" + $stateParams.id + ".json")
-        .success(function(data) {
-          $scope.card = data;
-        })
-        .error(function(data, status, headers, config) {
-          // TODO: Handle statuses here. Might not be a 404 (could be a 500 or something).
-          $location.path("/not_found");
-        });
-
-    }])
-    .controller('CardsNewController', ['$scope', '$http', function($scope, $http) {
+    .controller('CardsIndexController', ['$scope', '$http', function($scope, $http) {}])
+    .controller('CardsNewController', ['$scope', '$http', 'CardCollection', 'Encouragement', function($scope, $http, CardCollection, Encouragement) {
       $scope.card = {};
-
-      $scope.save = function(){
-        $http.post("/cards", { card: $scope.card });
+      $scope.encouragement = {
+        label: Encouragement.text(),
+        input: Encouragement.content()
       }
 
-    }]) // End of cardsShowController
+      $scope.save = function(){
+        var card = angular.copy($scope.card)
+        card.votes = 0;
+        $scope.card = null;
+        $http.post("/cards", { card: card });
+        CardCollection.prepend(card);
+      }
+
+    }])
     .controller('unfoundController', ['$scope', '$rootScope', function($scope, $rootScope) {
 
     }]); // End of unfoundController

@@ -2,12 +2,13 @@ define([
   'angular',
   'directives',
   'controllers',
+  'services',
   'uiRouter',
   'angularRoute',
   'angularResource',
   'angularAnimate'
   ],
-  function(angular, directives, controllers, uiRouter) {
+  function(angular, directives, controllers, services, uiRouter) {
     'use strict';
 
     var myApp = angular.module('myApp', [
@@ -15,6 +16,7 @@ define([
       'ngAnimate',
       'myApp.directives',
       'myApp.controllers',
+      'myApp.services',
       'ui.router'
     ]);
 

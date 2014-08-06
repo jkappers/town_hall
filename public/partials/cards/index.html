@@ -1,60 +1,8 @@
-<div ui-view>
-  <div class="container-fluid">
-<a ui-sref="cards.new">Create a Card</a>
-<span class="badge">{{user.votes}}</span> Votes Remaining
-  <div class="row">
-    <div class="col-sm-12 col-md-12">
-      <form class="form-inline" role="search">
-        <div class="form-group">
-          <div class="dropdown">
-            <a class="btn btn-default" data-toggle="dropdown" href="#">Current <span class="caret"></span></a>
-            <ul class="dropdown-menu" role="menu" aria-labelledby="dLabel">
-              <li><a ui-sref="cards">Current</a></li>
-              <li><a ui-sref="cards.favorite"><span class="glyphicon glyphicon-heart"></span> Favorites</a></li>
-              <li><a ui-sref="cards.hot"><span class="glyphicon glyphicon-fire"></span> Hot</a></li>
-            </ul>
-          </div>
-        </div>
-        <div class="form-group">
-          <input ng-model="query" placeholder="love peace happiness" class="form-control" />
-        </div>
-      </form>
+<div class="container-fluid">
+  <div class="col-md-12">
+    <div class="panel panel-default">
+      <div class="panel-body" ui-view="form"></div>
+      <ol ui-view="list" class="list-group"></ol>
     </div>
   </div>
-
-    <div class="row">
-      <div class="col-sm-12 col-md-12">
-        <ol class="list-group">
-          <li class="list-group-item" ng-repeat="card in cards | filter:query | orderBy:predicate:created_at">
-            <div class="card-actions" ng-if="!card.locked">
-              <div class="btn-group">
-                <button class="btn btn-default" ng-click="vote(card)">
-                  <span class="glyphicon glyphicon-chevron-up"></span>
-                </button>
-                <span class="btn btn-default">{{ card.votes }}</span>
-                <button class="btn btn-default" ng-click="unvote(card)">
-                  <span class="glyphicon glyphicon-chevron-down"></span>
-                </button>
-              </div>
-
-              <div class="btn-group">
-                <button class="btn btn-default" ng-click="favorite(card)">
-                  <span class="glyphicon glyphicon-heart"></span>
-                </button>
-              </div>
-            </div>
-            <span class="glyphicon glyphicon-lock" ng-if="card.locked"></span>
-            {{card.description}}
-          </li>
-        </ol>
-      </div>
-    </div>
-  </div>
-
-  <script>
-    $('.nav-tabs a').click(function (e) {
-      e.preventDefault()
-      $(this).tab('show')
-    })
-  </script>
 </div>
