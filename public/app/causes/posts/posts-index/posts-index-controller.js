@@ -1,10 +1,9 @@
 define([
   "angular",
-  "app",
-  "causes/models/post"
+  "app"
 ],
 function(angular, app){
-  return app.controller("PostsIndexController", function($scope, Post){
+  return app.controller("PostsIndexController", function($scope){
 
   })
 });

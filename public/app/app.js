@@ -3,7 +3,7 @@ define([
   "angularResource",
   "angularAnimate",
   "restangular",
-  "uiRouter"
+  "uiRouter"  
 ],
 function(angular){
   var application = angular.module("Collective", ["ngResource", "ngAnimate", "restangular", "ui.router"]);

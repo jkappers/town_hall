@@ -3,11 +3,9 @@ define([
   "app"
 ],
 function(angular, app){
-  return app.controller("PostsListController", function($scope, $http, Post){
+  return app.controller("PostsListController", function($scope, $http, PostsContext){
 
-    $scope.user = {
-      votes: 1
-    }
+    $scope.context = PostsContext;
 
     $scope.vote = function(card) {
       if ($scope.user.votes > 0) {
@@ -22,10 +20,5 @@ function(angular, app){
       card.votes -= 1;
       $http.delete("./cards/"+card.id+"/unvote");
     }
-
-    Post.getList().then(function(posts) {
-      $scope.collection = {}
-      $scope.collection.cards = posts
-    })
   })
 });

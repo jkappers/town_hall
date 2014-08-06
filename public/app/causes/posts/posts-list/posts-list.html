@@ -1,4 +1,4 @@
-<li class="list-group-item" ng-repeat="card in collection.cards | filter:query | orderBy:predicate:created_at">
+<li class="list-group-item" ng-repeat="card in context.posts() | filter:query | orderBy:predicate:created_at">
   <div class="card-actions" ng-if="!card.locked">
     <div class="btn-group">
       <button class="btn btn-default" ng-click="vote(card)">
