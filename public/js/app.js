@@ -20,8 +20,8 @@ define([
       'ui.router'
     ]);
 
-    myApp.run(function($rootScope, $templateCache, $http, $location, $window){
-      console.log('Angular Started');
+    myApp.run(function($rootScope, $templateCache, $http, $location, $window, Context){
+      $http.get("./users/current.json").success(Context.user)
     });
 
     return myApp;

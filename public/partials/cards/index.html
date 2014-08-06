@@ -1,8 +1,17 @@
+
 <div class="container-fluid">
-  <div class="col-md-12">
-    <div class="panel panel-default">
-      <div class="panel-body" ui-view="form"></div>
-      <ol ui-view="list" class="list-group"></ol>
+  <div class="row">
+    <div class="col-md-12">
+      <p class="text-info" ng-if="user.votes">You have <span class="label label-info">{{user.votes}}</span> vote(s) remaining! :D</p>
+      <p ng-if="!user.votes">You're out of votes :(</p>
+    </div>
+  </div>
+  <div class="row">
+    <div class="col-md-12">
+      <div class="panel panel-default">
+        <div class="panel-body" ui-view="form"></div>
+        <ol ui-view="list" class="list-group"></ol>
+      </div>
     </div>
   </div>
 </div>

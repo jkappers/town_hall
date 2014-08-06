@@ -5,7 +5,9 @@ define(['angular'], function(angular) {
   /* Controllers */
 
   return angular.module('myApp.controllers', [])
-    .controller('CardsListController', ['$scope', '$http', '$q', 'CardCollection', function($scope, $http, $q, CardCollection) {
+    .controller('CardsListController', ['$scope', '$http', '$q', 'CardCollection', 'Context', function($scope, $http, $q, CardCollection, Context) {
+
+      $scope.user = Context.user();
 
       $scope.vote = function(card) {
         if ($scope.user.votes > 0) {
@@ -22,17 +24,19 @@ define(['angular'], function(angular) {
       }
 
       $q.all([
-        $http.get("./users/current.json"),
         $http.get("./cards.json")
       ])
       .then(function(responses){
-        $scope.user = responses[0].data;
         $scope.collection = CardCollection
-        $scope.collection.cards(responses[1].data)
+        $scope.collection.cards(responses[0].data)
       });
     }]) // End of cardsIndexController
+    .controller('CardsIndexController', ['$scope', '$http', 'Context', function($scope, $http, Context) {
+      $scope.user = Context.user();
+      
 
-    .controller('CardsIndexController', ['$scope', '$http', function($scope, $http) {}])
+
+    }])
     .controller('CardsNewController', ['$scope', '$http', 'CardCollection', 'Encouragement', function($scope, $http, CardCollection, Encouragement) {
       $scope.card = {};
       $scope.encouragement = {

@@ -2,6 +2,16 @@ define(['angular', 'app'], function(angular, app) {
   'use strict';
 
   return angular.module('myApp.services', [])
+    .service("Context", function(){
+      var _user = null;
+
+      return {
+        user: function(user) {
+          user && (_user = user)
+          return _user;
+        }
+      }
+    })
     .service("CardCollection", function(){
       var _items = [];
 
